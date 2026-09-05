@@ -35,6 +35,28 @@ def get_product(db:Session,product_id:str):
     ).first()
 
 
+# Update product
+def update_product(
+        db:Session,
+        product_id:str,
+        product_name:str,
+        product_image:str | None,
+        product_price:float,
+        product_status:str,
+):
+    product = get_product(db,product_id)
+    if not product:
+        return None
+    product.product_name = product_name
+    product.product_price = product_price
+    product.product_status = product_status
+    if product_image:
+        product.product_image = product_image
+    db.commit()
+    db.refresh(product)
+    return product
+
+
 #delete
 def delete_product(db:Session,product_id:str):
     product = get_product(db,product_id)

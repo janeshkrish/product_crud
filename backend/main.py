@@ -141,7 +141,52 @@ def get_product(
         )
     return product
 
-
+# update product 
+@app.put("/products/{product_id}")
+async def update_product(
+    product_id : str,
+    product_name : str = Form(...),
+    product_image : UploadFile | None = File(None),
+    product_price : float = Form(...),
+    product_status : str = Form(...),
+    db: Session = Depends(get_db)
+):
+    # check existing product 
+    existing_product = crud.get_product(
+        db,product_id)
+    if not existing_product:
+        raise HTTPException(
+            status_code = 404,
+            detail = "Product not found"
+        )
+    # save image
+    image_path = None
+    if product_image:
+        extension = os.path.splitext(
+            product_image.filename
+        )[1]
+        filename = f"{uuid4()}{extension}"
+        image_path = os.path.join(
+            UPLOAD_DIR,
+            filename
+        )
+        with open(
+            image_path,
+            "wb"
+        ) as buffer:
+            shutil.copyfileobj(
+                product_image.file,
+                buffer
+            )
+        product = crud.update_product(
+            db = db,
+            product_id = product_id,
+            product_name = product_name,
+            product_image = image_path,
+            product_price = product_price,
+            product_status = product_status
+        )
+        return product
 # delete product 
 @app.delete("/products/{product_id}")
 def delete_product(
