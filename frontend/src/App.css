@@ -1,6 +1,6 @@
-/* ================================
+/* ========================================
    GLOBAL
-================================ */
+======================================== */
 
 * {
     box-sizing: border-box;
@@ -9,8 +9,11 @@
 html,
 body,
 #root {
-    margin: 0;
+    width: 100%;
+    min-width: 320px;
     min-height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 body {
@@ -27,47 +30,48 @@ body {
     color: #111827;
 }
 
-button,
-input,
-select {
-    font-family: inherit;
-}
 
-
-/* ================================
+/* ========================================
    APP
-================================ */
+======================================== */
 
 .app {
+    width: 100%;
     min-height: 100vh;
-    background: #f6f7fb;
 }
 
 
-/* ================================
+/* ========================================
    PAGE HEADER
-================================ */
+======================================== */
 
 .page-header {
+    width: 100%;
+
+    padding: 54px 24px 48px;
+
     background: #ffffff;
+
     border-bottom: 1px solid #e5e7eb;
-    padding: 42px 7%;
+
+    text-align: center;
 }
 
 .page-header > div {
+    width: 100%;
     max-width: 1250px;
     margin: 0 auto;
 }
 
 .eyebrow {
-    margin: 0 0 8px;
+    margin: 0 0 14px;
 
     color: #4f46e5;
 
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 800;
 
-    letter-spacing: 1.8px;
+    letter-spacing: 2px;
 }
 
 .page-header h1 {
@@ -75,45 +79,51 @@ select {
 
     color: #111827;
 
-    font-size: 34px;
+    font-size: 40px;
+    line-height: 1.15;
+
     font-weight: 750;
 
-    line-height: 1.2;
+    letter-spacing: -1.2px;
 }
 
 .subtitle {
-    margin: 10px 0 0;
+    margin: 14px 0 0;
 
     color: #6b7280;
 
-    font-size: 15px;
+    font-size: 16px;
+    line-height: 1.6;
 }
 
 
-/* ================================
+/* ========================================
    MAIN CONTAINER
-================================ */
+======================================== */
 
 .container {
-    width: calc(100% - 48px);
+    width: 100%;
     max-width: 1250px;
 
-    margin: 32px auto;
+    margin: 0 auto;
+
+    padding: 36px 24px 60px;
 }
 
 
-/* ================================
-   CARDS
-================================ */
+/* ========================================
+   FORM CARD
+======================================== */
 
-.form-card,
-.table-card {
+.form-card {
+    width: 100%;
+
     background: #ffffff;
 
     border: 1px solid #e5e7eb;
     border-radius: 16px;
 
-    padding: 30px;
+    padding: 34px;
 
     margin-bottom: 24px;
 
@@ -123,92 +133,85 @@ select {
 }
 
 
-/* ================================
-   CARD HEADERS
-================================ */
+/* ========================================
+   FORM HEADER
+======================================== */
 
-.form-header,
-.table-header {
-    margin-bottom: 28px;
+.form-header {
+    margin-bottom: 30px;
+
+    text-align: center;
 }
 
-.form-header h2,
-.table-header h2 {
+.form-header h2 {
     margin: 0;
 
     color: #111827;
 
-    font-size: 21px;
+    font-size: 23px;
     font-weight: 700;
 }
 
-.form-header p,
-.table-header p {
-    margin: 7px 0 0;
+.form-header p {
+    margin: 8px 0 0;
 
     color: #6b7280;
 
-    font-size: 14px;
+    font-size: 15px;
 }
 
 
-/* ================================
+/* ========================================
    FORM GRID
-================================ */
+======================================== */
 
 .form-grid {
     display: grid;
 
     grid-template-columns: repeat(2, minmax(0, 1fr));
 
-    column-gap: 24px;
-    row-gap: 22px;
+    gap: 24px 26px;
 }
 
 
-/* ================================
+/* ========================================
    FORM GROUP
-================================ */
+======================================== */
 
 .form-group {
+    min-width: 0;
+
     display: flex;
     flex-direction: column;
 
-    gap: 8px;
+    gap: 9px;
 }
 
-.full-width {
+.form-group.full-width {
     grid-column: 1 / -1;
 }
 
-
-/* ================================
-   LABEL
-================================ */
-
 .form-group label {
-    color: #1f2937;
+    color: #111827;
 
     font-size: 14px;
     font-weight: 650;
-
-    line-height: 1.4;
 }
 
 
-/* ================================
-   INPUT / SELECT
-================================ */
+/* ========================================
+   INPUTS
+======================================== */
 
-.form-group input[type="text"],
-.form-group input[type="number"],
+.form-group input,
 .form-group select {
     width: 100%;
-    height: 48px;
+    height: 54px;
 
-    padding: 0 14px;
+    padding: 0 15px;
 
     color: #111827;
+
     background: #ffffff;
 
     border: 1px solid #d1d5db;
@@ -216,6 +219,7 @@ select {
 
     outline: none;
 
+    font-family: inherit;
     font-size: 15px;
 
     transition:
@@ -224,105 +228,63 @@ select {
         background 0.2s ease;
 }
 
-
-/* Placeholder */
-
 .form-group input::placeholder {
     color: #9ca3af;
-    opacity: 1;
 }
 
-
-/* Focus */
-
-.form-group input[type="text"]:focus,
-.form-group input[type="number"]:focus,
+.form-group input:focus,
 .form-group select:focus {
-    color: #111827;
-
     border-color: #4f46e5;
 
     box-shadow:
         0 0 0 3px rgba(79, 70, 229, 0.12);
 }
 
-
-/* Hover */
-
-.form-group input[type="text"]:hover,
-.form-group input[type="number"]:hover,
-.form-group select:hover {
-    border-color: #9ca3af;
-}
-
-
-/* Disabled */
-
 .form-group input:disabled {
-    color: #6b7280;
-
     background: #f3f4f6;
 
-    border-color: #e5e7eb;
+    color: #6b7280;
 
     cursor: not-allowed;
 }
 
 
-/* ================================
-   SELECT
-================================ */
-
-.form-group select {
-    cursor: pointer;
-}
-
-
-/* ================================
-   FILE UPLOAD
-================================ */
+/* ========================================
+   FILE INPUT
+======================================== */
 
 .form-group input[type="file"] {
-    width: 100%;
+    height: auto;
 
-    min-height: 52px;
-
-    padding: 8px 10px;
-
-    color: #374151;
-    background: #fafafa;
-
-    border: 1px dashed #cbd5e1;
-    border-radius: 10px;
-
-    font-size: 14px;
+    padding: 10px;
 
     cursor: pointer;
 
-    transition:
-        border-color 0.2s ease,
-        background 0.2s ease;
-}
+    background: #ffffff;
 
-.form-group input[type="file"]:hover {
-    background: #f8fafc;
-    border-color: #6366f1;
+    border: 1px dashed #cbd5e1;
 }
 
 .form-group input[type="file"]::file-selector-button {
     margin-right: 12px;
 
-    padding: 9px 15px;
+    padding: 10px 17px;
 
     color: #ffffff;
+
     background: #4f46e5;
 
     border: none;
-    border-radius: 7px;
+    border-radius: 8px;
 
-    font-weight: 600;
+    font-family: inherit;
+
+    font-size: 14px;
+    font-weight: 650;
 
     cursor: pointer;
+
+    transition: background 0.2s ease;
 }
 
 .form-group input[type="file"]::file-selector-button:hover {
@@ -330,64 +292,124 @@ select {
 }
 
 
-/* ================================
+/* ========================================
    IMAGE PREVIEW
-================================ */
+======================================== */
 
 .image-preview {
-    display: flex;
-    align-items: center;
-
-    margin-top: 8px;
-}
-
-.image-preview img {
     width: 110px;
     height: 110px;
 
-    object-fit: cover;
+    margin-top: 8px;
+
+    overflow: hidden;
 
     border: 1px solid #e5e7eb;
-    border-radius: 12px;
+    border-radius: 10px;
 
-    padding: 3px;
+    background: #f9fafb;
+}
 
-    background: #ffffff;
+.image-preview img {
+    width: 100%;
+    height: 100%;
 
-    box-shadow:
-        0 3px 10px rgba(0, 0, 0, 0.06);
+    display: block;
+
+    object-fit: cover;
 }
 
 
-/* ================================
+/* ========================================
    FORM ACTIONS
-================================ */
+======================================== */
 
 .form-actions {
     display: flex;
 
     justify-content: flex-end;
+    align-items: center;
 
-    gap: 10px;
+    gap: 12px;
 
-    margin-top: 28px;
+    margin-top: 30px;
+    padding-top: 24px;
 
-    padding-top: 22px;
-
-    border-top: 1px solid #f0f1f3;
+    border-top: 1px solid #eef0f3;
 }
 
 
-/* ================================
-   BUTTON BASE
-================================ */
+/* ========================================
+   SUBMIT BUTTON
+======================================== */
 
-.submit-btn,
-.cancel-btn,
-.edit-btn,
-.delete-btn {
+.submit-btn {
+    min-width: 150px;
+    height: 48px;
+
+    padding: 0 22px;
+
+    color: #ffffff;
+
+    background: #4f46e5;
+
     border: none;
-    border-radius: 8px;
+    border-radius: 9px;
+
+    font-family: inherit;
+
+    font-size: 14px;
+    font-weight: 650;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 4px 10px rgba(79, 70, 229, 0.18);
+
+    transition:
+        background 0.2s ease,
+        transform 0.15s ease,
+        box-shadow 0.2s ease;
+}
+
+.submit-btn:hover {
+    background: #4338ca;
+
+    box-shadow:
+        0 6px 14px rgba(79, 70, 229, 0.22);
+}
+
+.submit-btn:active {
+    transform: translateY(1px);
+}
+
+.submit-btn:disabled {
+    opacity: 0.65;
+
+    cursor: not-allowed;
+
+    box-shadow: none;
+}
+
+
+/* ========================================
+   CANCEL BUTTON
+======================================== */
+
+.cancel-btn {
+    min-width: 100px;
+    height: 48px;
+
+    padding: 0 20px;
+
+    color: #374151;
+
+    background: #f3f4f6;
+
+    border: none;
+    border-radius: 9px;
+
+    font-family: inherit;
 
     font-size: 14px;
     font-weight: 650;
@@ -396,122 +418,325 @@ select {
 
     transition:
         background 0.2s ease,
-        transform 0.15s ease,
-        box-shadow 0.2s ease;
-}
-
-.submit-btn:active,
-.cancel-btn:active,
-.edit-btn:active,
-.delete-btn:active {
-    transform: translateY(1px);
-}
-
-
-/* ================================
-   SUBMIT BUTTON
-================================ */
-
-.submit-btn {
-    min-width: 140px;
-
-    padding: 12px 20px;
-
-    color: #ffffff;
-    background: #4f46e5;
-
-    box-shadow:
-        0 4px 10px rgba(79, 70, 229, 0.2);
-}
-
-.submit-btn:hover {
-    background: #4338ca;
-
-    box-shadow:
-        0 6px 14px rgba(79, 70, 229, 0.25);
-}
-
-.submit-btn:disabled {
-    opacity: 0.65;
-    cursor: not-allowed;
-}
-
-
-/* ================================
-   CANCEL BUTTON
-================================ */
-
-.cancel-btn {
-    padding: 12px 18px;
-
-    color: #374151;
-    background: #f3f4f6;
+        transform 0.15s ease;
 }
 
 .cancel-btn:hover {
     background: #e5e7eb;
 }
 
+.cancel-btn:active {
+    transform: translateY(1px);
+}
 
-/* ================================
-   TABLE
-================================ */
+
+/* ========================================
+   SEARCH CARD
+======================================== */
+
+.search-card {
+    width: 100%;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+
+    padding: 30px 34px;
+
+    margin-bottom: 24px;
+
+    box-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.03),
+        0 8px 24px rgba(15, 23, 42, 0.04);
+}
+
+
+/* ========================================
+   SEARCH HEADER
+======================================== */
+
+.search-header {
+    margin-bottom: 22px;
+}
+
+.search-header h2 {
+    margin: 0;
+
+    color: #111827;
+
+    font-size: 21px;
+    font-weight: 700;
+}
+
+.search-header p {
+    margin: 7px 0 0;
+
+    color: #6b7280;
+
+    font-size: 14px;
+}
+
+
+/* ========================================
+   SEARCH FORM
+======================================== */
+
+.search-form {
+    width: 100%;
+
+    display: flex;
+
+    align-items: flex-end;
+
+    gap: 12px;
+}
+
+
+/* ========================================
+   SEARCH INPUT
+======================================== */
+
+.search-input-group {
+    flex: 1;
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+.search-input-group label {
+    color: #111827;
+
+    font-size: 14px;
+    font-weight: 650;
+}
+
+.search-input-group input {
+    width: 100%;
+    height: 48px;
+
+    padding: 0 14px;
+
+    color: #111827;
+
+    background: #ffffff;
+
+    border: 1px solid #d1d5db;
+    border-radius: 9px;
+
+    outline: none;
+
+    font-family: inherit;
+    font-size: 15px;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.search-input-group input::placeholder {
+    color: #9ca3af;
+}
+
+.search-input-group input:focus {
+    border-color: #4f46e5;
+
+    box-shadow:
+        0 0 0 3px rgba(79, 70, 229, 0.12);
+}
+
+
+/* ========================================
+   SEARCH BUTTON
+======================================== */
+
+.search-btn {
+    height: 48px;
+
+    padding: 0 23px;
+
+    color: #ffffff;
+
+    background: #4f46e5;
+
+    border: none;
+    border-radius: 9px;
+
+    font-family: inherit;
+
+    font-size: 14px;
+    font-weight: 650;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+
+    transition:
+        background 0.2s ease,
+        transform 0.15s ease;
+}
+
+.search-btn:hover {
+    background: #4338ca;
+}
+
+.search-btn:active {
+    transform: translateY(1px);
+}
+
+.search-btn:disabled {
+    opacity: 0.65;
+
+    cursor: not-allowed;
+}
+
+
+/* ========================================
+   CLEAR SEARCH BUTTON
+======================================== */
+
+.clear-search-btn {
+    height: 48px;
+
+    padding: 0 21px;
+
+    color: #374151;
+
+    background: #f3f4f6;
+
+    border: none;
+    border-radius: 9px;
+
+    font-family: inherit;
+
+    font-size: 14px;
+    font-weight: 650;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+
+    transition:
+        background 0.2s ease,
+        transform 0.15s ease;
+}
+
+.clear-search-btn:hover {
+    background: #e5e7eb;
+}
+
+.clear-search-btn:active {
+    transform: translateY(1px);
+}
+
+
+/* ========================================
+   TABLE CARD
+======================================== */
+
+.table-card {
+    width: 100%;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+
+    padding: 34px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.03),
+        0 8px 24px rgba(15, 23, 42, 0.04);
+}
+
+
+/* ========================================
+   TABLE HEADER
+======================================== */
+
+.table-header {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 28px;
+}
+
+.table-header h2 {
+    margin: 0;
+
+    color: #111827;
+
+    font-size: 23px;
+    font-weight: 700;
+}
+
+.table-header p {
+    margin: 7px 0 0;
+
+    color: #6b7280;
+
+    font-size: 15px;
+}
+
+
+/* ========================================
+   TABLE CONTAINER
+======================================== */
 
 .table-container {
     width: 100%;
 
     overflow-x: auto;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
 }
+
+
+/* ========================================
+   TABLE
+======================================== */
 
 table {
     width: 100%;
 
-    border-collapse: separate;
-    border-spacing: 0;
-
     min-width: 760px;
+
+    border-collapse: collapse;
+
+    background: #ffffff;
 }
 
-
-/* ================================
-   TABLE HEADER
-================================ */
+thead {
+    background: #f9fafb;
+}
 
 th {
-    padding: 13px 14px;
+    padding: 16px 15px;
 
-    color: #6b7280;
-    background: #f9fafb;
+    color: #475569;
 
-    border-top: 1px solid #e5e7eb;
     border-bottom: 1px solid #e5e7eb;
+
+    font-size: 12px;
+    font-weight: 750;
+
+    letter-spacing: 0.5px;
 
     text-align: left;
 
-    font-size: 11px;
-    font-weight: 750;
-
-    letter-spacing: 0.7px;
     text-transform: uppercase;
 }
 
-th:first-child {
-    border-left: 1px solid #e5e7eb;
-    border-top-left-radius: 8px;
-}
-
-th:last-child {
-    border-right: 1px solid #e5e7eb;
-    border-top-right-radius: 8px;
-}
-
-
-/* ================================
-   TABLE BODY
-================================ */
-
 td {
-    padding: 14px;
+    padding: 16px 15px;
 
     color: #374151;
 
@@ -520,6 +745,10 @@ td {
     font-size: 14px;
 
     vertical-align: middle;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
 }
 
 tbody tr {
@@ -531,68 +760,95 @@ tbody tr:hover {
 }
 
 
-/* Product name */
-
-td:nth-child(3) {
-    color: #111827;
-    font-weight: 600;
-}
-
-
-/* Price */
-
-td:nth-child(4) {
-    color: #111827;
-    font-weight: 650;
-}
-
-
-/* ================================
+/* ========================================
    PRODUCT IMAGE
-================================ */
-
-.product-thumb,
-.no-image {
-    width: 50px;
-    height: 50px;
-
-    border-radius: 9px;
-}
+======================================== */
 
 .product-thumb {
+    width: 54px;
+    height: 54px;
+
     display: block;
 
     object-fit: cover;
 
+    border-radius: 8px;
+
     border: 1px solid #e5e7eb;
+
+    background: #f9fafb;
 }
 
 .no-image {
+    width: 54px;
+    height: 54px;
+
     display: flex;
 
     align-items: center;
     justify-content: center;
 
+    padding: 5px;
+
     color: #9ca3af;
-    background: #f3f4f6;
+
+    background: #f9fafb;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
 
     font-size: 10px;
-    font-weight: 600;
 
     text-align: center;
 }
 
 
-/* ================================
+/* ========================================
+   PRODUCT ID
+======================================== */
+
+td:nth-child(2) {
+    color: #475569;
+
+    font-weight: 500;
+}
+
+
+/* ========================================
+   PRODUCT NAME
+======================================== */
+
+td:nth-child(3) {
+    color: #111827;
+
+    font-weight: 650;
+}
+
+
+/* ========================================
+   PRODUCT PRICE
+======================================== */
+
+td:nth-child(4) {
+    color: #111827;
+
+    font-weight: 700;
+}
+
+
+/* ========================================
    STATUS
-================================ */
+======================================== */
 
 .status {
     display: inline-flex;
 
     align-items: center;
+    justify-content: center;
 
-    padding: 5px 10px;
+    min-width: 68px;
+
+    padding: 9px 13px;
 
     border-radius: 999px;
 
@@ -601,63 +857,111 @@ td:nth-child(4) {
 }
 
 .status.active {
-    color: #15803d;
-    background: #dcfce7;
+    color: #047857;
+
+    background: #d1fae5;
 }
 
 .status.inactive {
-    color: #6b7280;
-    background: #f3f4f6;
+    color: #b45309;
+
+    background: #fef3c7;
 }
 
 
-/* ================================
+/* ========================================
    ACTIONS
-================================ */
+======================================== */
 
 .actions {
     display: flex;
 
     align-items: center;
 
-    gap: 8px;
+    gap: 9px;
 }
 
 
-/* Edit */
+/* ========================================
+   EDIT BUTTON
+======================================== */
 
 .edit-btn {
-    padding: 8px 13px;
+    height: 38px;
+
+    padding: 0 15px;
 
     color: #4338ca;
+
     background: #eef2ff;
+
+    border: none;
+    border-radius: 8px;
+
+    font-family: inherit;
+
+    font-size: 13px;
+    font-weight: 650;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.15s ease;
 }
 
 .edit-btn:hover {
     background: #e0e7ff;
 }
 
+.edit-btn:active {
+    transform: translateY(1px);
+}
 
-/* Delete */
+
+/* ========================================
+   DELETE BUTTON
+======================================== */
 
 .delete-btn {
-    padding: 8px 13px;
+    height: 38px;
+
+    padding: 0 15px;
 
     color: #dc2626;
+
     background: #fef2f2;
+
+    border: none;
+    border-radius: 8px;
+
+    font-family: inherit;
+
+    font-size: 13px;
+    font-weight: 650;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.15s ease;
 }
 
 .delete-btn:hover {
     background: #fee2e2;
 }
 
+.delete-btn:active {
+    transform: translateY(1px);
+}
 
-/* ================================
+
+/* ========================================
    EMPTY TABLE
-================================ */
+======================================== */
 
 .empty {
-    padding: 55px 20px;
+    padding: 50px 20px;
 
     color: #9ca3af;
 
@@ -667,75 +971,154 @@ td:nth-child(4) {
 }
 
 
-/* ================================
-   RESPONSIVE
-================================ */
+/* ========================================
+   RESPONSIVE - TABLET
+======================================== */
 
-@media (max-width: 768px) {
-
-    .page-header {
-        padding: 32px 20px;
-    }
-
-    .page-header h1 {
-        font-size: 28px;
-    }
+@media (max-width: 900px) {
 
     .container {
-        width: calc(100% - 28px);
-
-        margin: 20px auto;
+        padding: 28px 18px 50px;
     }
 
     .form-card,
+    .search-card,
     .table-card {
-        padding: 20px;
-
-        border-radius: 13px;
+        padding: 26px;
     }
 
-    .form-grid {
-        grid-template-columns: 1fr;
-
-        gap: 18px;
+    .page-header {
+        padding: 45px 20px 40px;
     }
 
-    .full-width {
-        grid-column: auto;
+    .page-header h1 {
+        font-size: 34px;
     }
 
-    .form-actions {
-        flex-direction: column-reverse;
-    }
-
-    .submit-btn,
-    .cancel-btn {
-        width: 100%;
-    }
 }
 
 
-/* ================================
-   SMALL MOBILE
-================================ */
+/* ========================================
+   RESPONSIVE - MOBILE
+======================================== */
 
-@media (max-width: 480px) {
+@media (max-width: 700px) {
+
+    .page-header {
+        padding: 38px 18px 34px;
+    }
 
     .page-header h1 {
-        font-size: 24px;
+        font-size: 30px;
+
+        letter-spacing: -0.7px;
     }
 
     .subtitle {
         font-size: 14px;
     }
 
+    .container {
+        padding: 20px 14px 40px;
+    }
+
     .form-card,
+    .search-card,
+    .table-card {
+        padding: 20px;
+
+        border-radius: 13px;
+    }
+
+
+    /* Form becomes one column */
+
+    .form-grid {
+        grid-template-columns: 1fr;
+
+        gap: 20px;
+    }
+
+    .form-group.full-width {
+        grid-column: auto;
+    }
+
+
+    /* Search becomes one column */
+
+    .search-form {
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+    .search-btn,
+    .clear-search-btn {
+        width: 100%;
+    }
+
+
+    /* Form buttons */
+
+    .form-actions {
+        flex-direction: column-reverse;
+
+        align-items: stretch;
+    }
+
+    .submit-btn,
+    .cancel-btn {
+        width: 100%;
+    }
+
+
+    /* Table */
+
+    .table-card {
+        overflow: hidden;
+    }
+
+    .table-header {
+        margin-bottom: 20px;
+    }
+
+    .table-header h2 {
+        font-size: 21px;
+    }
+
+}
+
+
+/* ========================================
+   SMALL MOBILE
+======================================== */
+
+@media (max-width: 450px) {
+
+    .page-header h1 {
+        font-size: 27px;
+    }
+
+    .eyebrow {
+        font-size: 11px;
+
+        letter-spacing: 1.5px;
+    }
+
+    .form-card,
+    .search-card,
     .table-card {
         padding: 16px;
     }
 
     .form-header h2,
     .table-header h2 {
-        font-size: 19px;
+        font-size: 20px;
     }
+
+    .form-group input,
+    .form-group select {
+        height: 50px;
+    }
+
 }
