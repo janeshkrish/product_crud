@@ -1,4 +1,4 @@
-from sqlalchemy import Session
+from sqlalchemy.orm import Session
 from models.subcategory_model import Subcategory
 from models.product_model import Product
 

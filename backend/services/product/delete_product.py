@@ -1,4 +1,4 @@
-from sqlalchemy import Session
+from sqlalchemy.orm import Session
 from models.product_model import Product
 
 def delete_product(db:Session,product_id: str):
