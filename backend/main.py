@@ -178,15 +178,15 @@ async def update_product(
                 product_image.file,
                 buffer
             )
-        product = crud.update_product(
-            db = db,
-            product_id = product_id,
-            product_name = product_name,
-            product_image = image_path,
-            product_price = product_price,
-            product_status = product_status
-        )
-        return product
+    product = crud.update_product(
+        db = db,
+        product_id = product_id,
+        product_name = product_name,
+        product_image = image_path,
+        product_price = product_price,
+        product_status = product_status
+    )
+    return product
 # delete product 
 @app.delete("/products/{product_id}")
 def delete_product(

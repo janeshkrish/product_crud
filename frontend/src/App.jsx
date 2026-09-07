@@ -5,6 +5,7 @@ import ProductForm from "./components/ProductForm";
 import ProductTable from "./components/ProductTable";
 
 import "./App.css";
+import logo from "./assets/logo.jpeg";
 
 
 const API_URL = "http://localhost:8000";
@@ -104,23 +105,27 @@ function App() {
 
             <header className="page-header">
 
-                <div>
+    <img
+        src={logo}
+        alt="Yatzar Logo"
+        className="logo"
+    />
 
-                    <p className="eyebrow">
-                        PRODUCT MANAGEMENT
-                    </p>
+    <div>
+        <p className="eyebrow">
+            PRODUCT MANAGEMENT
+        </p>
 
-                    <h1>
-                        Product Dashboard
-                    </h1>
+        <h1>
+            Product Dashboard
+        </h1>
 
-                    <p className="subtitle">
-                        Create, update and manage your products
-                    </p>
+        <p className="subtitle">
+            Create, update and manage your products
+        </p>
+    </div>
 
-                </div>
-
-            </header>
+</header>
 
 
             <main className="container">
