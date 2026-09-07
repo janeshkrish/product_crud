@@ -28,31 +28,31 @@ def update_subcategory(
         )
         if not category:
             return "CATEGORY_NOT_FOUND"
-        if request.subcategory_name:
-            existing_subcategory = (
-                db.query(Subcategory)
-                .filter(
-                    Subcategory.subcategory_name == request.subcategory_name,
-                    Subcategory.subcategory_id != subcategory_id
-                )
-                .first()
+    if request.subcategory_name:
+        existing_subcategory = (
+            db.query(Subcategory)
+            .filter(
+                Subcategory.subcategory_name == request.subcategory_name,
+                Subcategory.subcategory_id != subcategory_id
             )
-            if existing_subcategory:
-                return "SUBCATEGORY_ALREADY_EXISTS"
-            oldsubcategory_name = subcategory.subcategory_name
-            subcategory.subcategory_name = request.subcategory_name
-            db.query(Product).filter(
-                Product.subcategory_name == oldsubcategory_name
-            ).update(
-                {
-                    Product.subcategory_name : request.subcategory_name
-                },
-                synchronize_session = False
+            .first()
             )
-        if request.category_name:
-            subcategory.category_name = request.category_name
-        if request.subcategory_status:
-            subcategory.subcategory_status = request.subcategory_status
-        db.commit()
-        db.refresh(subcategory)
-        return subcategory
+    if existing_subcategory:
+            return "SUBCATEGORY_ALREADY_EXISTS"
+    oldsubcategory_name = subcategory.subcategory_name
+    subcategory.subcategory_name = request.subcategory_name
+    db.query(Product).filter(
+            Product.subcategory_name == oldsubcategory_name
+        ).update(
+        {
+        Product.subcategory_name : request.subcategory_name
+        },
+        synchronize_session = False
+        )
+    if request.category_name:
+        subcategory.category_name = request.category_name
+    if request.subcategory_status:
+        subcategory.subcategory_status = request.subcategory_status
+    db.commit()
+    db.refresh(subcategory)
+    return subcategory

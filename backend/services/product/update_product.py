@@ -26,7 +26,7 @@ def update_product(
     subcategory_name = (
         request.subcategory_name
         if request.subcategory_name
-        else request.subcategory_name
+        else product.subcategory_name
     )
     category = (
         db.query(Category)
