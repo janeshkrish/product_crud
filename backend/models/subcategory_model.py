@@ -15,7 +15,7 @@ class Subcategory(Base):
     )
     category_name = Column(
         String(100),
-        ForeignKey("categories.category_name",onupdate="CASCADE"),
+        ForeignKey("categories.category_name"),
         nullable = False
     )
     subcategory_status = Column(
