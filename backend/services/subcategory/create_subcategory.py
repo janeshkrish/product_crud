@@ -10,7 +10,7 @@ def create_subcategory(
     category = (
         db.query(Category)
         .filter(
-            Category.category_id == request.category_id
+            Category.category_name == request.category_name
         )
         .first()
     )
@@ -37,7 +37,7 @@ def create_subcategory(
         next_number = last_number + 1
     else:
         next_number = 1
-    subcategory_id = f"C-{next_number:02d}"
+    subcategory_id = f"S-{next_number:02d}"
     subcategory = Subcategory(
         subcategory_id = subcategory_id,
         subcategory_name = request.subcategory_name,
