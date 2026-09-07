@@ -62,7 +62,7 @@ def get_single_subcategory(
     return subcategory
 
 @router.put(
-        "/{subcategory_id}"
+        "/{subcategory_id}",
         response_model = SubcategoryResponse
 )
 def update_single_subcategory(
