@@ -7,6 +7,7 @@ from response.category_response import CategoryResponse
 from services.category.create_category import create_category
 from services.category.get_category import (get_categories,get_category)
 from services.category.delete_category import delete_category
+from services.category.update_category import update_category
 
 
 router = APIRouter(
@@ -55,6 +56,32 @@ def get_single_category(
         raise HTTPException(
             status_code = 404,
             detail = "Category not Found"
+        )
+    return category
+
+@router.put(
+        path = "/{category_id}",
+        response_model = CategoryResponse
+)
+def update_single_category(
+    category_id : str,
+    request : CategoryUpdateRequest,
+    db : Session = Depends(get_db)
+):
+    category = update_category(
+        db,
+        category_id,
+        request
+    )
+    if category is None:
+        raise HTTPException(
+            status_code = 404,
+            detail = "Category not found"
+        )
+    if category == "CATEGORY_ALREADY_EXIT":
+        raise HTTPException(
+            status_code = 400,
+            detail = "Category already exist"
         )
     return category
 

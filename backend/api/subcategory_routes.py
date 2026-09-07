@@ -6,6 +6,7 @@ from response.subcategory_response import SubcategoryResponse
 from services.subcategory.create_subcategory import create_subcategory
 from services.subcategory.get_subcategory import (get_subcategoris,get_subcategory)
 from services.subcategory.delete_subcategory import delete_subcategory
+from services.subcategory.update_subcategory import update_subcategory
 
 router = APIRouter(
     prefix = "/subcategories",
@@ -60,6 +61,37 @@ def get_single_subcategory(
         )
     return subcategory
 
+@router.put(
+        "/{subcategory_id}"
+        response_model = SubcategoryResponse
+)
+def update_single_subcategory(
+    subcategory_id :str,
+    request : SubcategoryUpdateRequest,
+    db: Session = Depends(get_db)
+):
+    subcategory = update_subcategory(
+        db,
+        subcategory_id,
+        request
+    ) 
+    if subcategory is None:
+        raise HTTPException(
+            status_code = 404,
+            detail = "Subcategory not found"
+        )
+    if subcategory == "CATEGORY_NOT_FOUND":
+        raise HTTPException(
+            status_code = 404,
+            detail = "Category not found"
+        )
+    if subcategory == "SUBCATEGORY_ALREADY_EXISTS":
+        raise HTTPException(
+            status_code = 400,
+            detail = "Subcategory already exists"
+        )
+    return subcategory
+ 
 @router.delete(
     "/{subcategory_id}"
 )

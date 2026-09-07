@@ -27,7 +27,7 @@ def post_product(
     )
     if not product:
         raise HTTPException(
-            status = 404,
+            status_code = 404,
             detail = "Invalid category or subcategory"
         )
     return product
@@ -54,7 +54,7 @@ def get_single_product(
     )
     if not product:
         raise HTTPException(
-            status = 404,
+            status_code = 404,
             detail = "Product not found"
         )
     return product
