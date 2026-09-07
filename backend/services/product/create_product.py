@@ -3,10 +3,11 @@ from models.category_model import Category
 from models.subcategory_model import Subcategory
 from models.product_model import Product
 from response.product_response import ProductResponse
+from request.product_request import (ProductCreateRequest,ProductUpdateRequest)
 
 def create_product(
         db: Session,
-        request : ProductResponse
+        request : ProductCreateRequest
 ):
     category = (
         db.query(Category)
