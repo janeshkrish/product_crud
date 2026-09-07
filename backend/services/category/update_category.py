@@ -22,7 +22,7 @@ def update_category(
         existing_category = (
             db.query(Category)
             .filter(
-                Category.category_name == category.name,
+                Category.category_name == request.category_name,
                 Category.category_id != category_id
             )
             .first()
