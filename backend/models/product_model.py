@@ -14,12 +14,12 @@ class Product(Base):
     )
     category_name = Column(
         String(100),
-        ForeignKey("categories.category_name"),
+        ForeignKey("categories.category_name",deferrable = True,initially="DEFERRED"),
         nullable = False
     )
     subcategory_name = Column(
         String(100),
-        ForeignKey("subcategories.subcategory_name"),
+        ForeignKey("subcategories.subcategory_name",deferrable = True,initially="DEFERRED"),
         nullable = False
     )
     product_status = Column(

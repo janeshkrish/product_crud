@@ -28,6 +28,7 @@ def update_subcategory(
         )
         if not category:
             return "CATEGORY_NOT_FOUND"
+    existing_subcategory = None
     if request.subcategory_name:
         existing_subcategory = (
             db.query(Subcategory)
@@ -37,18 +38,20 @@ def update_subcategory(
             )
             .first()
             )
-    if existing_subcategory:
+        if existing_subcategory:
             return "SUBCATEGORY_ALREADY_EXISTS"
-    oldsubcategory_name = subcategory.subcategory_name
-    subcategory.subcategory_name = request.subcategory_name
-    db.query(Product).filter(
-            Product.subcategory_name == oldsubcategory_name
-        ).update(
-        {
-        Product.subcategory_name : request.subcategory_name
-        },
-        synchronize_session = False
-        )
+        oldsubcategory_name = subcategory.subcategory_name
+        if request.subcategory_name:
+            subcategory.subcategory_name = request.subcategory_name
+        #subcategory.subcategory_name = request.subcategory_name
+        db.query(Product).filter(
+            Product.subcategory_name == oldsubcategory_name 
+            ).update(
+            {
+            Product.subcategory_name : request.subcategory_name
+            },
+            synchronize_session = False
+            )
     if request.category_name:
         subcategory.category_name = request.category_name
     if request.subcategory_status:
