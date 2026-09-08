@@ -1,4 +1,5 @@
 from pydantic import BaseModel , Field
+from typing import Optional 
 
 class CategoryCreateRequest(BaseModel):
     category_name: str = Field(
@@ -12,12 +13,12 @@ class CategoryCreateRequest(BaseModel):
     )
 
 class CategoryUpdateRequest(BaseModel):
-    category_name : str | None = Field(
+    category_name : Optional[str] = Field(
         default = None,
         min_length = 1,
         max_length = 100
     )
-    category_status : str | None = Field(
+    category_status : Optional[str] = Field(
         default = None,
         max_length = 20
     )

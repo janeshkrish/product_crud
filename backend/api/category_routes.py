@@ -11,7 +11,7 @@ from services.category.update_category import update_category
 
 
 router = APIRouter(
-    prefix = "/category",
+    prefix = "/categories",
     tags = ["Category"]
 )
 @router.post(
@@ -19,23 +19,23 @@ router = APIRouter(
     response_model = CategoryResponse,
     status_code = status.HTTP_201_CREATED
 )
-def post_category(
+async def post_category(
     request : CategoryCreateRequest,
     db :  Session = Depends(get_db)
 ):
     category = create_category(db,request)
     if not category:
         raise HTTPException(
-            status_code = 404,
+            status_code = status.HTTP_400_BAD_REQUEST,
             detail = "Category already exists"
         )
     return category
 
 @router.get(
-    path = "",
+    "",
     response_model = list[CategoryResponse]
 )
-def get_all_categories(
+async def get_all_categories(
     db: Session = Depends(get_db)
 ):
     return get_categories(db)
@@ -44,7 +44,7 @@ def get_all_categories(
     path = "/{category_id}",
     response_model = CategoryResponse
 )
-def get_single_category(
+async def get_single_category(
     category_id : str,
     db: Session = Depends(get_db)
 ):
@@ -54,16 +54,16 @@ def get_single_category(
     )
     if not category:
         raise HTTPException(
-            status_code = 404,
+            status_code = status.HTTP_404_NOT_FOUND,
             detail = "Category not Found"
         )
     return category
 
 @router.put(
-        path = "/{category_id}",
+        "/{category_id}",
         response_model = CategoryResponse
 )
-def update_single_category(
+async def update_single_category(
     category_id : str,
     request : CategoryUpdateRequest,
     db : Session = Depends(get_db)
@@ -75,20 +75,20 @@ def update_single_category(
     )
     if category is None:
         raise HTTPException(
-            status_code = 404,
+            status_code = status.HTTP_404_NOT_FOUND,
             detail = "Category not found"
         )
     if category == "CATEGORY_ALREADY_EXIT":
         raise HTTPException(
-            status_code = 400,
+            status_code = status.HTTP_400_BAD_REQUEST,
             detail = "Category already exist"
         )
     return category
 
 @router.delete(
-    path = "/{category_id}"
+    "/{category_id}"
 )
-def remove_category(
+async def remove_category(
     category_id : str,
     db : Session = Depends(get_db)
 ):
@@ -98,15 +98,15 @@ def remove_category(
     )
     if category is None:
         raise HTTPException(
-            status_code = 404,
+            status_code = status.HTTP_404_NOT_FOUND,
             detail = "Category not Found"
         )
     if category == "CATEGORY_IN_USE":
         raise HTTPException(
-            status_code = 400,
+            status_code = status.HTTP_400_BAD_REQUEST,
             detail = "Category cannot be deleted because it is been used"
         )
     return {
-        "message" : "Category been deleted" 
+        "message" : "Category has been sucessfully deleted" 
     }
 

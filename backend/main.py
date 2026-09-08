@@ -7,12 +7,20 @@ from models.product_model import Product
 from api.category_routes import router as category_router
 from api.product_routes import router as product_router
 from api.subcategory_routes import router as subcategory_router
+from contextlib import asynccontextmanager
 
-Base.metadata.create_all(bind = engine)
+#Base.metadata.create_all(bind = engine)
+@asynccontextmanager
+async def lifespan(app:FastAPI):
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
+    yield
+    await engine.dispose()
 
 app = FastAPI(
     title = "Product management System",
-    version = "1.0.0"
+    version = "1.0.0",
+    lifespan = lifespan
 )
 
 app.add_middleware(

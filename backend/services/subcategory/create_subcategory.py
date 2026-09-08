@@ -1,33 +1,37 @@
 from sqlalchemy.orm import Session
 from models.category_model import Category
-from response.subcategory_response import SubcategoryResponse 
 from models.subcategory_model import Subcategory
+from request.subcategory_request import SubcategoryCreateRequest
 
 def create_subcategory(
         db:Session,
-        request: SubcategoryResponse
+        request: SubcategoryCreateRequest
 ):
     category = (
         db.query(Category)
         .filter(
-            Category.category_name == request.category_name
+            Category.category_name == request.category_name,
+            Category.deleted_at.is_(None)
         )
         .first()
     )
     if not category:
-        return None
+        return "CATEGORY_NOT_FOUND"
     existing_subcategory = (
         db.query(Subcategory)
         .filter(
-            Subcategory.subcategory_name == request.subcategory_name
+            Subcategory.subcategory_name == request.subcategory_name,
+            Subcategory.deleted_at.is_(None)
         )
         .first()
     )
     if existing_subcategory:
-        return None
+        return "SUBCATEGORY_ALREADY_EXISTS"
+    
     last_subcategory = (
         db.query(Subcategory)
         .order_by(Subcategory.subcategory_id.desc())
+        .wait_for_update()
         .first()
     )
     if last_subcategory:

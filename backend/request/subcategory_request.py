@@ -1,4 +1,5 @@
 from pydantic import BaseModel , Field
+from typing import Optional
 
 class SubcategoryCreateRequest(BaseModel):
     subcategory_name: str = Field(
@@ -17,17 +18,17 @@ class SubcategoryCreateRequest(BaseModel):
     )
 
 class SubcategoryUpdateRequest(BaseModel):
-    subcategory_name : str | None = Field(
+    subcategory_name : Optional[str] = Field(
         default = None,
         min_length = 1,
         max_length = 100
     )
-    category_name : str | None = Field(
+    category_name : Optional[str] = Field(
         default = None,
         min_length = 1,
         max_length = 100
     )
-    subcategory_status : str | None = Field(
+    subcategory_status : Optional[str] = Field(
         default = None,
         max_length = 20
     )

@@ -9,7 +9,7 @@ from services.product.get_product import (get_Product,get_Products)
 from services.product.update_product import update_product
 
 router = APIRouter(
-    prefix = "/product",
+    prefix = "/products",
     tags = ["Product"]
 )
 
@@ -18,7 +18,7 @@ router = APIRouter(
     response_model = ProductResponse,
     status_code = status.HTTP_201_CREATED
 )
-def post_product(
+async def post_product(
     request : ProductCreateRequest,
     db:Session = Depends(get_db)
 ):
@@ -26,18 +26,33 @@ def post_product(
         db,
         request
     )
-    if not product:
+    if product == "CATEGORY_NOT_FOUND":
         raise HTTPException(
-            status_code = 404,
-            detail = "Invalid category or subcategory"
+            status_code = status.HTTP_404_NOT_FOUND,
+            detail = "The specified parent category does not exist or is inactive"
         )
+    if product == "SUBCATEGORY_NOT_FOUND":
+        raise HTTPException(
+            status_code = status.HTTP_404_NOT_FOUND,
+            detail = "The specified subcategory does not exist under this category"
+        )
+    if product == "PRODUCT_ALREADY_EXISITS":
+        raise HTTPException(
+            status_code = status.HTTP_400_BAD_REQUEST,
+            detail = "A product with this name already exist"
+        )
+    # if not product:
+    #     raise HTTPException(
+    #         status_code = 404,
+    #         detail = "Invalid category or subcategory"
+    #     )
     return product
 
 @router.get(
     "",
     response_model = list[ProductResponse]
 )
-def get_all_product(
+async def get_all_product(
     db:Session = Depends(get_db)
 ):
     return get_Products(db)
@@ -45,7 +60,7 @@ def get_all_product(
 @router.get(
     "/{product_id}"
 )
-def get_single_product(
+async def get_single_product(
     product_id  : str,
     db:Session = Depends(get_db) 
 ):
@@ -55,7 +70,7 @@ def get_single_product(
     )
     if not product:
         raise HTTPException(
-            status_code = 404,
+            status_code = status.HTTP_404_NOT_FOUND,
             detail = "Product not found"
         )
     return product
@@ -64,7 +79,7 @@ def get_single_product(
         "/{product_id}",
         response_model = ProductResponse
 )
-def update_single_product(
+async def update_single_product(
     product_id:str,
     request: ProductUpdateRequest,
     db:Session = Depends(get_db)
@@ -76,25 +91,30 @@ def update_single_product(
     )
     if product is None:
         raise HTTPException(
-            status_code = 404,
+            status_code = status.HTTP_404_NOT_FOUND,
             detail = "Product not found"
         )
     if product == "CATEGORY_NOT_FOUND":
         raise HTTPException(
-            status_code = 404,
-            detail = "Category not found"
+            status_code = status.HTTP_442_UNPROCESSABLE_ENTITY,
+            detail = "Target category name does not exist or has been disabled"
         )
     if product == "SUBCATEGORY_NOT_FOUND":
         raise HTTPException(
-            status_code = 404,
-            detail = "Subcategory not found"
+            status_code = status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail = "Target subcategory name does not map to this specific category choice"
+        )
+    if product == "PRODUCT_ALREADY_EXISTS":
+        raise HTTPException(
+            status_code = status.HTTP_400_BAD_REQUEST,
+            detail = "Product name already taken by another item in stock"
         )
     return product
 
 @router.delete(
     "/{product_id}"
 )
-def remove_product(
+async def remove_product(
     product_id : str,
     db: Session = Depends(get_db)
 ):
@@ -104,8 +124,8 @@ def remove_product(
     )
     if not product:
         raise HTTPException(
-            status_code = 404,
-            detail = "Product not found"
+            status_code = status.HTTP_404_NOT_FOUND,
+            detail = "Product not found or already removed"
         )
     return {
         "message" : "Product Deleted Successfully"

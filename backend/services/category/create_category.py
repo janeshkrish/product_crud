@@ -1,10 +1,10 @@
 from sqlalchemy.orm import Session
 from models.category_model import Category
-from response.category_response import CategoryResponse 
+from request.category_request import CategoryCreateRequest
 
 def create_category(
         db:Session,
-        request: CategoryResponse
+        request: CategoryCreateRequest
 ):
     existing_category = (
         db.query(Category)
@@ -18,6 +18,7 @@ def create_category(
     last_category = (
         db.query(Category)
         .order_by(Category.category_id.desc())
+        .with_for_updates()
         .first()
     )
     if last_category:

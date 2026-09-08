@@ -2,8 +2,7 @@ from sqlalchemy.orm import Session
 from models.category_model import Category
 from models.subcategory_model import Subcategory
 from models.product_model import Product
-from response.product_response import ProductResponse
-from request.product_request import (ProductCreateRequest,ProductUpdateRequest)
+from request.product_request import ProductCreateRequest
 
 def create_product(
         db: Session,
@@ -12,25 +11,38 @@ def create_product(
     category = (
         db.query(Category)
         .filter(
-            Category.category_name == request.category_name
+            Category.category_name == request.category_name,
+            Category.deleted_at.is_(None)
         )
         .first()
     )
     if not category:
-        return None
+        return "CATEGORY_NOT_FOUND"
     subcategory = (
         db.query(Subcategory)
           .filter(
             Subcategory.subcategory_name == request.subcategory_name,  
-            Subcategory.category_name == request.category_name
+            Subcategory.category_name == request.category_name,
+            Subcategory.deleted_at.is_(None)
         )
         .first()
     )
     if not subcategory:
-        return None
+        return "SUBCATEGORY_NOT_FOUND"
+    existing_product = (
+        db.query(Product)
+        .filter(
+            Product.product_name == request.product_name,
+            Product.deleted_at.is_(None)    
+        )
+        .first()
+    )
+    if existing_product:
+        return "PRODUCT_ALREADY_EXISITS"
     last_product = (
         db.query(Product)
         .order_by(Product.product_id.desc())
+        .wait_for_update()
         .first()
     )
     if last_product:

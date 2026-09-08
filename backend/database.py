@@ -1,8 +1,12 @@
 import os
 
 from dotenv import load_dotenv
-from sqlalchemy import create_engine
-from sqlalchemy.orm import declarative_base,sessionmaker
+from sqlalchemy.ext.asyncio import (
+    AsyncSession,
+    async_sessionmaker,
+    create_async_engine
+)
+from sqlalchemy.orm import declarative_base
 
 load_dotenv()
 
@@ -13,22 +17,19 @@ if not DATABASE_URL:
         "DATABASE_URL is not configured in the .env file"
     )
 
-engine = create_engine(
+engine = create_async_engine(
     DATABASE_URL,
     pool_pre_ping = True
 )
 
-SessionLocal = sessionmaker(
-    autocommit = False,
-    autoflush = False,
-    bind = engine
+SessionLocal = async_sessionmaker(
+    bind = engine,
+    class_ = AsyncSession,
+    expire_on_commit = False
 )
 
 Base = declarative_base()
 
-def get_db():
-    db = SessionLocal()
-    try:
+async def get_db():
+    async with SessionLocal() as db:
         yield db
-    finally:
-        db.close()

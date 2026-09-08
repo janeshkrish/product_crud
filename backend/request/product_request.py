@@ -1,4 +1,5 @@
 from pydantic import BaseModel , Field
+from typing import Optional
 
 class ProductCreateRequest(BaseModel):
     product_name: str = Field(
@@ -22,22 +23,22 @@ class ProductCreateRequest(BaseModel):
     )
 
 class ProductUpdateRequest(BaseModel):
-    product_name : str | None = Field(
+    product_name : Optional[str] = Field(
         default = None,
         min_length = 1,
         max_length = 100
     )
-    category_name : str | None = Field(
+    category_name : Optional[str] = Field(
         default = None,
         min_length = 1,
         max_length = 100
     )
-    subcategory_name : str | None = Field(
+    subcategory_name : Optional[str] = Field(
         default = None,
         min_length = 1,
         max_length = 100
     )
-    product_status : str | None = Field(
+    product_status : Optional[str] = Field(
         default = None,
         max_length = 20
     )

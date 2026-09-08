@@ -18,7 +18,7 @@ router = APIRouter(
     response_model = SubcategoryResponse,
     status_code = status.HTTP_201_CREATED
 )
-def post_subcategory(
+async def post_subcategory(
     request : SubcategoryCreateRequest,
     db: Session = Depends(get_db)
 ):
@@ -26,18 +26,28 @@ def post_subcategory(
         db,
         request
     )
-    if not subcategory:
+    if subcategory == "CATEGORY_NOT_FOUND":
         raise HTTPException(
-            status = 404,
-            detail = "Subcategory not found or Subcategory already exists"
+            status_code = status.HTTP_404_NOT_FOUND,
+            detail = "The parent Category name specified does not exsist or inactive"
         )
+    if subcategory == "SUBCATEGORY_ALREADY_EXISTS":
+        raise HTTPException(
+            status_code = status.HTTP_400_BAD_REQUEST,
+            detail = "A subcategory with this name already exist"
+        )
+    # if not subcategory:
+    #     raise HTTPException(
+    #         status = 404,
+    #         detail = "Subcategory not found or Subcategory already exists"
+    #     )
     return subcategory
 
 @router.get(
     "",
     response_model = list[SubcategoryResponse],
 )
-def get_all_subcategories(
+async def get_all_subcategories(
     db : Session = Depends(get_db)
 ):
     return get_subcategoris(db)
@@ -46,7 +56,7 @@ def get_all_subcategories(
     "/{subcategory_id}",
     response_model = SubcategoryResponse
 )
-def get_single_subcategory(
+async def get_single_subcategory(
     subcategory_id : str,
     db : Session = Depends(get_db)
 ):
@@ -56,8 +66,8 @@ def get_single_subcategory(
     )
     if not subcategory:
         raise HTTPException(
-            status_code = 404,
-            detail = "Category not found"
+            status_code = status.HTTP_404_NOT_FOUND,
+            detail = "subcategory not found"
         )
     return subcategory
 
@@ -65,7 +75,7 @@ def get_single_subcategory(
         "/{subcategory_id}",
         response_model = SubcategoryResponse
 )
-def update_single_subcategory(
+async def update_single_subcategory(
     subcategory_id :str,
     request : SubcategoryUpdateRequest,
     db: Session = Depends(get_db)
@@ -77,17 +87,17 @@ def update_single_subcategory(
     ) 
     if subcategory is None:
         raise HTTPException(
-            status_code = 404,
+            status_code = status.HTTP_404_NOT_FOUND,
             detail = "Subcategory not found"
         )
     if subcategory == "CATEGORY_NOT_FOUND":
         raise HTTPException(
-            status_code = 404,
+            status_code = status.HTTP_404_NOT_FOUND,
             detail = "Category not found"
         )
     if subcategory == "SUBCATEGORY_ALREADY_EXISTS":
         raise HTTPException(
-            status_code = 400,
+            status_code = status.HTTP_400_BAD_REQUEST,
             detail = "Subcategory already exists"
         )
     return subcategory
@@ -95,7 +105,7 @@ def update_single_subcategory(
 @router.delete(
     "/{subcategory_id}"
 )
-def remove_subcategory(
+async def remove_subcategory(
     subcategory_id : str,
     db: Session = Depends(get_db)
 ):
@@ -103,11 +113,21 @@ def remove_subcategory(
         db,
         subcategory_id
     )
-    if not subcategory:
+    if subcategory is None:
         raise HTTPException(
-            status_code = 400,
-            detail = "SubCategory cannot be deleted because it is being used"
+            status_code = status.HTTP_404_NOT_FOUND,
+            detail = "Subcategory not found"
         )
+    if subcategory == "SUBCATEGORY_IN_USE":
+        raise HTTPException(
+            status_code = status.HTTP_400_BAD_REQUEST,
+            detail = "Subcategory cannot be deleted because active products are assigned to it"
+        )
+    # if not subcategory:
+    #     raise HTTPException(
+    #         status_code = 400,
+    #         detail = "SubCategory cannot be deleted because it is being used"
+    #     )
     return {
-        "message" : "SubCategory deleted successfully"
+        "message" : "Subcategory deleted successfully"
     }
